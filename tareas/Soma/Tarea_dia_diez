@@ -1,0 +1,241 @@
+/**
+ * Sistema para rentar peliculas
+ *
+ * - listado de peliculas
+ * - inventario
+ * - busquedas
+ * - alquiler
+ * - clientes
+ */
+
+enum Genres{
+  Action,
+  Comedy,
+  Crime,
+  Adventure,
+  Drama,
+  Fantasy,
+  Horror,
+  Romance
+}
+
+interface Movie {
+  id: string;
+  title: string;
+  year: string;
+  genres: Array<Genres>;
+  duration?: number;
+  disponible: boolean
+}
+
+const movies: Array<Movie> = [
+  {
+    id: "1",
+    title: "Game Night",
+    year: "2018",
+    genres: [Genres.Action, Genres.Comedy, Genres.Crime],
+    duration: 100,
+    disponible: true
+  },
+  {
+    id: "2",
+    title: "Area X: Annihilation",
+    year: "2018",
+    genres: [Genres.Adventure, Genres.Drama, Genres.Fantasy],
+    disponible: true
+  },
+  {
+    id: "3",
+    title: "Hannah",
+    year: "2017",
+    genres: [Genres.Drama],
+    duration: 95,
+    disponible: true
+  },
+  {
+    id: "4",
+    title: "The Lodgers",
+    year: "2017",
+    genres: [Genres.Drama, Genres.Horror, Genres.Romance],
+    duration: 92,
+    disponible: false
+  },
+  {
+    id: "5",
+    title: "Beast of Burden",
+    year: "2018",
+    genres: [Genres.Action, Genres.Crime, Genres.Drama],
+    disponible: true
+  }
+]
+
+let op: number
+do {
+  console.log("Banpelis")
+  console.log("1.Listado de peliculas")
+  console.log("2.Inventario")
+  console.log("3.Busquedas")
+  console.log("4.Alquiler")
+  console.log("5.Clientes")
+  console.log("6.Salir")
+  op = Number(prompt("Opcion"))
+  console.clear()
+  switch (op) {
+    case 1:
+      console.table(movies)
+      prompt("Aceptar para continuar")
+      console.clear()
+    break
+    case 2:
+      const inv: Array<Movie> = []
+      for (let i: number = 0; i < movies.length; i++){
+        if (movies[i].disponible) {
+          inv.push(movies[i])
+        }
+      }
+      console.table(inv)
+      prompt("Aceptar para continuar")
+      console.clear()
+    break
+    case 3:
+      console.log("Busquedad con:")
+      console.log("1.Id")
+      console.log("2.Titulo")
+      console.log("3.Año")
+      console.log("4.Genero")
+      console.log("5.Duracion")
+      console.log("6.Disponibilidad")
+      let op1: number = Number(prompt("Busqueda con:"))
+      let i: number
+      console.clear()
+      switch (op1) {
+        case 1:
+          let id: string | null = prompt("Id")
+          for (i = 0; i < movies.length; i++){
+            if (movies[i].id === id) {
+              console.table(movies[i])
+              break
+            }
+          }
+          if (i === movies.length) {
+            console.log("Pelicula no encontrada")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+        case 2:
+          let title: string | null = prompt("Titulo")
+          for (i = 0; i < movies.length; i++){
+            if (movies[i].title === title) {
+              console.table(movies[i])
+              break
+            }
+          }
+          if (i === movies.length) {
+            console.log("Pelicula no encontrada")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+        case 3:
+          const busq3: Array<Movie> = []
+          let year: string | null = prompt("Año")
+          for (i = 0; i < movies.length; i++){
+            if (movies[i].year === year) {
+              busq3.push(movies[i])
+            }
+          }
+          if (busq3.length !== 0) {
+            console.table(busq3)
+          }
+          else {
+            console.log("Peliculas no encontrada")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+        case 4:
+          const busq4: Array<Movie> = []
+          let gener: number | null = Number(prompt("Genero"))
+          for (i = 0; i < movies.length; i++) {
+            for (let j: number = 0; j < movies[i].genres.length; j++) {
+              if (movies[i].genres[j] === gener) {
+                busq4.push(movies[i])
+              }
+            }
+          }
+          if (busq4.length !== 0) {
+            console.table(busq4)
+          }
+          else {
+            console.log("Peliculas no encontrada")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+        case 5:
+          const busq5: Array<Movie> = []
+          let duracion: number | null = Number(prompt("Duracion"))
+          for (i = 0; i < movies.length; i++){
+            if (movies[i].duration === duracion) {
+              busq5.push(movies[i])
+            }
+          }
+          if (busq5.length !== 0) {
+            console.table(busq5)
+          }
+          else {
+            console.log("Peliculas no encontrada")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+        case 6:
+          const busq6: Array<Movie> = []
+          let disp: number = Number(prompt("1=true/0=false:"))
+          let b: boolean = disp === 1 ? true : false
+          for (i = 0; i < movies.length; i++){
+            if (movies[i].disponible === b) {
+              busq6.push(movies[i])
+            }
+          }
+          if (busq6.length !== 0) {
+            console.table(busq6)
+          }
+          else {
+            console.log("No hay disponibles")
+          }
+          prompt("Aceptar para continuar")
+          console.clear()
+        break
+      }
+    break
+    case 4:
+    let j: number = 0
+      let rep: string | null = prompt("Id de la pelicuala a alquilar:")
+      for (let j: number = 0; j < movies.length; j++){
+        if (movies[j].id === rep) {
+          if (movies[j].disponible) {
+            console.log("Pelicula alquilada")
+            movies[j].disponible = false
+            break
+          }
+          else {
+            console.log("Pelicula no disponible")
+            break
+          }
+        }
+      }
+      if (j === movies.length) {
+        console.log("Pelicula no encontrada")
+      }
+      prompt("Aceptar para continuar")
+      console.clear()
+    break
+    case 6:
+      console.log("Adios")
+    break
+    default:
+      console.log("Opcion erronea.")
+  }
+}while(op != 6)
